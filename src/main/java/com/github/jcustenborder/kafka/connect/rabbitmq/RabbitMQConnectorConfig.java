@@ -33,7 +33,7 @@ class RabbitMQConnectorConfig extends AbstractConfig {
   public static final String REQUESTED_HEARTBEAT_CONFIG = "rabbitmq.requested.heartbeat.seconds";
   public static final String AUTOMATIC_RECOVERY_ENABLED_CONFIG = "rabbitmq.automatic.recovery.enabled";
   public static final String TOPOLOGY_RECOVERY_ENABLED_CONFIG = "rabbitmq.topology.recovery.enabled";
-  public static final String NETWORK_RECOVERY_INTERVAL_CONFIG = "rabbitmq.network.recovery.interval";
+  public static final String NETWORK_RECOVERY_INTERVAL_CONFIG = "rabbitmq.network.recovery.interval.ms";
   public static final String HOST_CONFIG = "rabbitmq.host";
   public static final String PORT_CONFIG = "rabbitmq.port";
   static final String HOST_DOC = "The RabbitMQ host to connect to. See [ConnectionFactory.setHost(java.lang.String)](https://www.rabbitmq.com/releases/rabbitmq-java-client/current-javadoc/com/rabbitmq/client/ConnectionFactory.html#setHost-java.lang.String-)";
@@ -88,7 +88,7 @@ class RabbitMQConnectorConfig extends AbstractConfig {
     this.requestedHeartbeat = this.getInt(REQUESTED_HEARTBEAT_CONFIG);
     this.automaticRecoveryEnabled = this.getBoolean(AUTOMATIC_RECOVERY_ENABLED_CONFIG);
     this.topologyRecoveryEnabled = this.getBoolean(TOPOLOGY_RECOVERY_ENABLED_CONFIG);
-    this.networkRecoveryInterval = this.getLong(NETWORK_RECOVERY_INTERVAL_CONFIG);
+    this.networkRecoveryInterval = this.getInt(NETWORK_RECOVERY_INTERVAL_CONFIG);
     this.host = this.getString(HOST_CONFIG);
     this.port = this.getInt(PORT_CONFIG);
 

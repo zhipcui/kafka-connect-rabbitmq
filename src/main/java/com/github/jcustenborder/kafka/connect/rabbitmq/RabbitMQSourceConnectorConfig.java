@@ -18,6 +18,7 @@ package com.github.jcustenborder.kafka.connect.rabbitmq;
 import com.github.jcustenborder.kafka.connect.utils.template.StructTemplate;
 import org.apache.kafka.common.config.ConfigDef;
 
+import java.util.List;
 import java.util.Map;
 
 class RabbitMQSourceConnectorConfig extends RabbitMQConnectorConfig {
@@ -26,7 +27,11 @@ class RabbitMQSourceConnectorConfig extends RabbitMQConnectorConfig {
   public static final String TOPIC_CONF = "kafka.topic";
   static final String TOPIC_DOC = "Kafka topic to write the messages to.";
 
+  public static final String QUEUE_CONF = "rabbitmq.queue";
+  static final String QUEUE_DOC = "rabbitmq.queue";
+
   public final StructTemplate kafkaTopic;
+  public final List<String> queues;
 
   public RabbitMQSourceConnectorConfig(Map<String, String> settings) {
     super(config(), settings);
@@ -34,10 +39,12 @@ class RabbitMQSourceConnectorConfig extends RabbitMQConnectorConfig {
     final String kafkaTopicFormat = this.getString(TOPIC_CONF);
     this.kafkaTopic = new StructTemplate();
     this.kafkaTopic.addTemplate(KAFKA_TOPIC_TEMPLATE, kafkaTopicFormat);
+    this.queues = this.getList(QUEUE_CONF);
   }
 
   public static ConfigDef config() {
     return RabbitMQConnectorConfig.config()
-        .define(TOPIC_CONF, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH, TOPIC_DOC);
+        .define(TOPIC_CONF, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH, TOPIC_DOC)
+        .define(QUEUE_CONF, ConfigDef.Type.LIST, ConfigDef.Importance.HIGH, QUEUE_DOC);
   }
 }

@@ -15,10 +15,12 @@
  */
 package com.github.jcustenborder.kafka.connect.rabbitmq;
 
+import com.github.jcustenborder.kafka.connect.utils.data.SourceRecordConcurrentLinkedDeque;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
+import org.apache.kafka.connect.source.SourceRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,15 @@ import java.io.IOException;
 
 class ConnectConsumer implements Consumer {
   private static final Logger log = LoggerFactory.getLogger(ConnectConsumer.class);
+  final SourceRecordConcurrentLinkedDeque records;
+  final RabbitMQSourceConnectorConfig config;
+  final SourceRecordBuilder sourceRecordBuilder;
+
+  ConnectConsumer(SourceRecordConcurrentLinkedDeque records, RabbitMQSourceConnectorConfig config) {
+    this.records = records;
+    this.config = config;
+    this.sourceRecordBuilder = new SourceRecordBuilder(this.config);
+  }
 
   @Override
   public void handleConsumeOk(String s) {
@@ -56,7 +67,8 @@ class ConnectConsumer implements Consumer {
   public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties basicProperties, byte[] bytes) throws IOException {
     log.trace("handleDelivery({})", consumerTag);
 
-//    Struct message = this.messageBuilder.value(consumerTag, envelope, basicProperties, bytes);
+    SourceRecord sourceRecord = this.sourceRecordBuilder.sourceRecord(consumerTag, envelope, basicProperties, bytes);
+    this.records.add(sourceRecord);
   }
 
 
