@@ -15,17 +15,29 @@
  */
 package com.github.jcustenborder.kafka.connect.rabbitmq;
 
+import com.github.jcustenborder.kafka.connect.utils.template.StructTemplate;
 import org.apache.kafka.common.config.ConfigDef;
 
 import java.util.Map;
 
 class RabbitMQSourceConnectorConfig extends RabbitMQConnectorConfig {
 
+  static final String KAFKA_TOPIC_TEMPLATE = "kafkaTopicTemplate";
+  public static final String TOPIC_CONF = "kafka.topic";
+  static final String TOPIC_DOC = "Kafka topic to write the messages to.";
+
+  public final StructTemplate kafkaTopic;
+
   public RabbitMQSourceConnectorConfig(Map<String, String> settings) {
     super(config(), settings);
+
+    final String kafkaTopicFormat = this.getString(TOPIC_CONF);
+    this.kafkaTopic = new StructTemplate();
+    this.kafkaTopic.addTemplate(KAFKA_TOPIC_TEMPLATE, kafkaTopicFormat);
   }
 
   public static ConfigDef config() {
-    return RabbitMQConnectorConfig.config();
+    return RabbitMQConnectorConfig.config()
+        .define(TOPIC_CONF, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH, TOPIC_DOC);
   }
 }

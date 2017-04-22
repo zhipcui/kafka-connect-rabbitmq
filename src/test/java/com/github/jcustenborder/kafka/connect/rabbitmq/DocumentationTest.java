@@ -30,11 +30,11 @@ public class DocumentationTest extends BaseDocumentationTest {
   @Override
   protected List<Schema> schemas() {
     return Arrays.asList(
-        MessageBuilder.HEADER_VALUE,
-        MessageBuilder.SCHEMA_ENVELOPE,
-        MessageBuilder.SCHEMA_BASIC_PROPERTIES,
-        MessageBuilder.MESSAGE_SCHEMA,
-        MessageBuilder.SCHEMA_KEY
+        MessageConverter.SCHEMA_HEADER_VALUE,
+        MessageConverter.SCHEMA_ENVELOPE,
+        MessageConverter.SCHEMA_BASIC_PROPERTIES,
+        MessageConverter.SCHEMA_VALUE,
+        MessageConverter.SCHEMA_KEY
     );
   }
 }

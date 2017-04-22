@@ -19,7 +19,6 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
-import org.apache.kafka.connect.data.Struct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,8 +26,6 @@ import java.io.IOException;
 
 class ConnectConsumer implements Consumer {
   private static final Logger log = LoggerFactory.getLogger(ConnectConsumer.class);
-
-  MessageBuilder messageBuilder = new MessageBuilder();
 
   @Override
   public void handleConsumeOk(String s) {
@@ -59,7 +56,7 @@ class ConnectConsumer implements Consumer {
   public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties basicProperties, byte[] bytes) throws IOException {
     log.trace("handleDelivery({})", consumerTag);
 
-    Struct message = this.messageBuilder.message(consumerTag, envelope, basicProperties, bytes);
+//    Struct message = this.messageBuilder.value(consumerTag, envelope, basicProperties, bytes);
   }
 
 
