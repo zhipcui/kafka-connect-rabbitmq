@@ -72,6 +72,8 @@ public class RabbitMQSourceTask extends SourceTask {
       try {
         log.info("Starting consumer");
         this.channel.basicConsume(queue, this.consumer);
+        log.info("Setting channel.basicQos({});");
+        this.channel.basicQos(this.config.prefetchCount, this.config.prefetchGlobal);
       } catch (IOException ex) {
         throw new ConnectException(ex);
       }

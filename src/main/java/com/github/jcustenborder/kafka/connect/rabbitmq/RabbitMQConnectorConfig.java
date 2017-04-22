@@ -101,16 +101,16 @@ class RabbitMQConnectorConfig extends AbstractConfig {
         .define(USERNAME_CONFIG, ConfigDef.Type.STRING, ConnectionFactory.DEFAULT_USER, ConfigDef.Importance.HIGH, USERNAME_DOC)
         .define(PASSWORD_CONFIG, ConfigDef.Type.STRING, ConnectionFactory.DEFAULT_PASS, ConfigDef.Importance.HIGH, PASSWORD_DOC)
         .define(VIRTUAL_HOST_CONFIG, ConfigDef.Type.STRING, ConnectionFactory.DEFAULT_VHOST, ConfigDef.Importance.HIGH, VIRTUAL_HOST_DOC)
-        .define(REQUESTED_CHANNEL_MAX_CONFIG, ConfigDef.Type.INT, ConnectionFactory.DEFAULT_CHANNEL_MAX, ConfigDef.Importance.HIGH, REQUESTED_CHANNEL_MAX_DOC)
-        .define(REQUESTED_FRAME_MAX_CONFIG, ConfigDef.Type.INT, ConnectionFactory.DEFAULT_FRAME_MAX, ConfigDef.Importance.HIGH, REQUESTED_FRAME_MAX_DOC)
-        .define(CONNECTION_TIMEOUT_CONFIG, ConfigDef.Type.INT, ConnectionFactory.DEFAULT_CONNECTION_TIMEOUT, ConfigDef.Importance.HIGH, CONNECTION_TIMEOUT_DOC)
-        .define(HANDSHAKE_TIMEOUT_CONFIG, ConfigDef.Type.INT, ConnectionFactory.DEFAULT_HANDSHAKE_TIMEOUT, ConfigDef.Importance.HIGH, HANDSHAKE_TIMEOUT_DOC)
-        .define(SHUTDOWN_TIMEOUT_CONFIG, ConfigDef.Type.INT, ConnectionFactory.DEFAULT_SHUTDOWN_TIMEOUT, ConfigDef.Importance.HIGH, SHUTDOWN_TIMEOUT_DOC)
-        .define(REQUESTED_HEARTBEAT_CONFIG, ConfigDef.Type.INT, ConnectionFactory.DEFAULT_HEARTBEAT, ConfigDef.Importance.HIGH, REQUESTED_HEARTBEAT_DOC)
-        .define(AUTOMATIC_RECOVERY_ENABLED_CONFIG, ConfigDef.Type.BOOLEAN, false, ConfigDef.Importance.HIGH, AUTOMATIC_RECOVERY_ENABLED_DOC)
-        .define(TOPOLOGY_RECOVERY_ENABLED_CONFIG, ConfigDef.Type.BOOLEAN, false, ConfigDef.Importance.HIGH, TOPOLOGY_RECOVERY_ENABLED_DOC)
-        .define(NETWORK_RECOVERY_INTERVAL_CONFIG, ConfigDef.Type.INT, 0, ConfigDef.Importance.HIGH, NETWORK_RECOVERY_INTERVAL_DOC)
-        .define(PORT_CONFIG, ConfigDef.Type.INT, ConnectionFactory.DEFAULT_AMQP_PORT, ConfigDef.Importance.HIGH, PORT_DOC);
+        .define(REQUESTED_CHANNEL_MAX_CONFIG, ConfigDef.Type.INT, ConnectionFactory.DEFAULT_CHANNEL_MAX, ConfigDef.Importance.LOW, REQUESTED_CHANNEL_MAX_DOC)
+        .define(REQUESTED_FRAME_MAX_CONFIG, ConfigDef.Type.INT, ConnectionFactory.DEFAULT_FRAME_MAX, ConfigDef.Importance.LOW, REQUESTED_FRAME_MAX_DOC)
+        .define(CONNECTION_TIMEOUT_CONFIG, ConfigDef.Type.INT, ConnectionFactory.DEFAULT_CONNECTION_TIMEOUT, ConfigDef.Importance.LOW, CONNECTION_TIMEOUT_DOC)
+        .define(HANDSHAKE_TIMEOUT_CONFIG, ConfigDef.Type.INT, ConnectionFactory.DEFAULT_HANDSHAKE_TIMEOUT, ConfigDef.Importance.LOW, HANDSHAKE_TIMEOUT_DOC)
+        .define(SHUTDOWN_TIMEOUT_CONFIG, ConfigDef.Type.INT, ConnectionFactory.DEFAULT_SHUTDOWN_TIMEOUT, ConfigDef.Importance.LOW, SHUTDOWN_TIMEOUT_DOC)
+        .define(REQUESTED_HEARTBEAT_CONFIG, ConfigDef.Type.INT, ConnectionFactory.DEFAULT_HEARTBEAT, ConfigDef.Importance.LOW, REQUESTED_HEARTBEAT_DOC)
+        .define(AUTOMATIC_RECOVERY_ENABLED_CONFIG, ConfigDef.Type.BOOLEAN, true, ConfigDef.Importance.LOW, AUTOMATIC_RECOVERY_ENABLED_DOC)
+        .define(TOPOLOGY_RECOVERY_ENABLED_CONFIG, ConfigDef.Type.BOOLEAN, true, ConfigDef.Importance.LOW, TOPOLOGY_RECOVERY_ENABLED_DOC)
+        .define(NETWORK_RECOVERY_INTERVAL_CONFIG, ConfigDef.Type.INT, 10000, ConfigDef.Importance.LOW, NETWORK_RECOVERY_INTERVAL_DOC)
+        .define(PORT_CONFIG, ConfigDef.Type.INT, ConnectionFactory.DEFAULT_AMQP_PORT, ConfigDef.Importance.MEDIUM, PORT_DOC);
   }
 
   final ConnectionFactory connectionFactory() {
