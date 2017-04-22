@@ -73,7 +73,7 @@ class MessageConverter {
       if (Schema.Type.ARRAY == v || Schema.Type.MAP == v || Schema.Type.STRUCT == v) {
         continue;
       }
-      final String doc = String.format("Storage for when the `type` field is set to `%s`. Null otherwise.", v);
+      final String doc = String.format("Storage for when the `type` field is set to `%s`. Null otherwise.", v.name().toLowerCase());
 
       Schema fieldSchema = SchemaBuilder.type(v)
           .doc(doc)
