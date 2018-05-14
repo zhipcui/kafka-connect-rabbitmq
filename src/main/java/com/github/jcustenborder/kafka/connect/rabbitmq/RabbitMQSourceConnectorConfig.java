@@ -27,6 +27,9 @@ class RabbitMQSourceConnectorConfig extends RabbitMQConnectorConfig {
   public static final String TOPIC_CONF = "kafka.topic";
   static final String TOPIC_DOC = "Kafka topic to write the messages to.";
 
+  public static final String PARTITION_KEY_NULL_CONF = "kafka.partition.key.null";
+  static final String PARTITION_KEY_NULL_DOC = "True if the message key should be null.";
+
   public static final String QUEUE_CONF = "rabbitmq.queue";
   static final String QUEUE_DOC = "rabbitmq.queue";
 
@@ -43,12 +46,14 @@ class RabbitMQSourceConnectorConfig extends RabbitMQConnectorConfig {
   public final List<String> queues;
   public final int prefetchCount;
   public final boolean prefetchGlobal;
+  public final boolean partitionKeyNull;
 
   public RabbitMQSourceConnectorConfig(Map<String, String> settings) {
     super(config(), settings);
 
     final String kafkaTopicFormat = this.getString(TOPIC_CONF);
     this.kafkaTopic = new StructTemplate();
+    this.partitionKeyNull = this.getBoolean(PARTITION_KEY_NULL_CONF);
     this.kafkaTopic.addTemplate(KAFKA_TOPIC_TEMPLATE, kafkaTopicFormat);
     this.queues = this.getList(QUEUE_CONF);
     this.prefetchCount = this.getInt(PREFETCH_COUNT_CONF);
@@ -58,6 +63,7 @@ class RabbitMQSourceConnectorConfig extends RabbitMQConnectorConfig {
   public static ConfigDef config() {
     return RabbitMQConnectorConfig.config()
         .define(TOPIC_CONF, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH, TOPIC_DOC)
+        .define(PARTITION_KEY_NULL_CONF, ConfigDef.Type.BOOLEAN, true, ConfigDef.Importance.MEDIUM, PARTITION_KEY_NULL_DOC)
         .define(PREFETCH_COUNT_CONF, ConfigDef.Type.INT, 0, ConfigDef.Importance.MEDIUM, PREFETCH_COUNT_DOC)
         .define(PREFETCH_GLOBAL_CONF, ConfigDef.Type.BOOLEAN, false, ConfigDef.Importance.MEDIUM, PREFETCH_GLOBAL_DOC)
         .define(QUEUE_CONF, ConfigDef.Type.LIST, ConfigDef.Importance.HIGH, QUEUE_DOC);

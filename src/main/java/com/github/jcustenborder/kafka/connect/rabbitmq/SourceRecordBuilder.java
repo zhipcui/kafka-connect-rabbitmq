@@ -41,8 +41,8 @@ class SourceRecordBuilder {
         ImmutableMap.of("deliveryTag", envelope.getDeliveryTag()),
         topic,
         null,
-        key.schema(),
-        key,
+        this.config.partitionKeyNull ? null : key.schema(),
+        this.config.partitionKeyNull ? null : key,
         value.schema(),
         value,
         null == basicProperties.getTimestamp() ? this.time.milliseconds() : basicProperties.getTimestamp().getTime()
